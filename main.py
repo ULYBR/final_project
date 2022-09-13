@@ -9,7 +9,8 @@ def menu_login():
     rodando_menu = True
     while rodando_menu:
         opcao_seguida = input(f'Realizar login (Escreva 1)\n' #Feito
-                              f'Criar uma conta (Escreva 2)\n' #Feito
+                              f'Criar uma conta (Escreva 2)\n'
+                              f'Fechar (Escreva 3)\n' #Feito
                               f'Selecione uma das opções acima digitando apenas o numero: ')
 
         try:
@@ -18,20 +19,33 @@ def menu_login():
         except ValueError:
             it_is = False
 
-        if it_is and 1 <= opcao_seguida <= 2:
+        if it_is and 1 <= opcao_seguida <= 3:
             rodando_menu = False
+            if opcao_seguida == 1:  # Inserir um grupo de trabalho em uma lista (Escreva 3)
+                usuario_ativo = login()
+                if usuario_ativo['admin']:
+                    return menu_adm()
+                else:
+                    return menu_user()
+
+            if opcao_seguida == 2:  # Remover um grupo de trabalho em uma lista (Escreva 4)
+                create_account()
+                return menu_login()
+
+            if opcao_seguida == 3:  # Remover um grupo de trabalho em uma lista (Escreva 4)
+                continue
+
             return opcao_seguida
         else:
-            print(f'Espera-se uma opcao_seguida com valor inteiro entre 1 e 2\n')
+            print(f'Espera-se uma opcao_seguida com valor inteiro entre 1 e 3\n')
 
 def menu_user():
     rodando_menu = True
     while rodando_menu:
         opcao_seguida = input(f'Buscar um filme (Escreva 1)\n' #Feito
-                              f'Adicionar review para um filme (Escreva 2)\n' #TODO A fazer <-----
-                              f'Consultar reviews (Escreva 3)\n' #Feito
-                              f'Editar review (Escreva 4)\n' #Feito
-                              f'Sair (Escreva 5)\n' #Feito
+                              f'Editar review para um filme (Escreva 2)\n' #TODO A fazer <----
+                              f'Consultar overview (Escreva 3)\n' #Feito
+                              f'Sair (Escreva 4)\n' #Feito
                               f'Selecione uma das opções acima digitando apenas o numero: ')
 
         try:
@@ -42,18 +56,31 @@ def menu_user():
 
         if it_is and 1 <= opcao_seguida <= 5:
             rodando_menu = False
-            return opcao_seguida
+
+            if opcao_seguida == 1:  # Inserir um grupo de trabalho numa lista (Escreva 3)
+                imprimir_filme(consultando_filme())
+                return menu_user()
+
+            if opcao_seguida == 2:  # Inserir um grupo de trabalho numa lista (Escreva 3)
+                editando_filme(consultando_filme())
+                return menu_user()
+
+            if opcao_seguida == 3:  # Inserir um grupo de trabalho numa lista (Escreva 3)
+                imprimir_overview_filme(consultando_filme())
+                return menu_user()
+
+            if opcao_seguida == 4:  # Inserir um grupo de trabalho numa lista (Escreva 3)
+                return menu_login()
+
         else:
             print(f'Espera-se uma opcao_seguida com valor inteiro entre 1 e 5\n')
 
 def menu_adm():
     rodando_menu = True
     while rodando_menu:
-        opcao_seguida = input(f'Buscar um usuário (Escreva 1)\n' #Feito
-                              f'Editar/deletar um usuário (Escreva 2)\n' #Falta editar <---- TODO
-                              f'Consultar filmes (Escreva 3)\n' #Feito
-                              f'Editar/deletar filmes (Escreva 4)\n' #Falta editar <---- TODO
-                              f'Sair (Escreva 5)\n' #Feito
+        opcao_seguida = input(f'Buscar um usuário (Escreva 1)\n'
+                              f'deletar um usuário (Escreva 2)\n'
+                              f'Sair (Escreva 3)\n' #Feito
                               f'Selecione uma das opções acima digitando apenas o numero: ')
 
         try:
@@ -62,11 +89,21 @@ def menu_adm():
         except ValueError:
             it_is = False
 
-        if it_is and 1 <= opcao_seguida <= 5:
+        if it_is and 1 <= opcao_seguida <= 3:
             rodando_menu = False
-            return opcao_seguida
+            if opcao_seguida == 1:
+                buscar_usuario()
+                return menu_adm()
+
+            if opcao_seguida == 2:
+                delete_user()
+                return menu_adm()
+
+            if opcao_seguida == 3:
+                return menu_login()
+
         else:
-            print(f'Espera-se uma opcao_seguida com valor inteiro entre 1 e 5\n')
+            print(f'Espera-se uma opcao_seguida com valor inteiro entre 1 e 3\n')
 
 # Classes
 class usuario:
@@ -81,7 +118,6 @@ class adm(usuario):
         print(data_users)
 
 # Funções relacionadas ao login
-
 def login():  # return usuario  #usuario_ativo = login()
     usuario = input(f'Digite seu usuário: ')
     senha = input(f'Digite sua senha: ') #decorativa
@@ -89,11 +125,21 @@ def login():  # return usuario  #usuario_ativo = login()
     for lista_de_usuarios in usuarios_cadastrados:
         if usuario == lista_de_usuarios['Name']:
             print(f'login realizado corretamente')
+
             return lista_de_usuarios
     print(f'Usuário não cadastrado')
 
+def buscar_usuario():
+    usuario = input(f'Digite o usuário para busca: ')
+    usuarios_cadastrados = lendo_users_json()
+    for lista_de_usuarios in usuarios_cadastrados:
+        if usuario == lista_de_usuarios['Name']:
+            print(f'{lista_de_usuarios}')
+        else:
+            print(f'Usuário não cadastrado')
 def logout():  # usuario_ativo = 'nao' #vai para o menu_login
-    return 'nao'
+    usuario = 'nao'
+    return menu_login()
 
 def delete_user():
     usuarios_cadastrados = lendo_users_json()
@@ -108,9 +154,8 @@ def delete_user():
             del usuarios_cadastrados[i]
             salvando_users_json(usuarios_cadastrados)
             print(f'usuário delatado')
+            break
 
-    # for lista_de_usuarios in usuarios_cadastrados:
-    #     print(lista_de_usuarios['Name'])
 
 def create_account():  # return usuario  #usuario_ativo = login()
     usuario = input(f'Digite seu usuário: ')
@@ -163,11 +208,15 @@ def imprimir_filme(opcao_seguida):
 
     print(f'O filme escolhido é o filme {titulo}, esse é um filme de {ano}, produzido por {director}.\n'
           f'Seus generos são {genero} e sua nota no IMDB é {nota} com {votos} votos')
-    # TODO imprimir a descrição
 
-def editando_filme():
+def imprimir_overview_filme(opcao_seguida):
+    titulo = data[opcao_seguida]['Series_Title']
+    overview = data[opcao_seguida]['Overview']
+
+    print(f'Exibindo o overview para o filme {titulo}:\n'
+          f'{overview}')
+def editando_filme(filme_seguido):
     print('A opção edição de filme foi escolhida')
-    filme_seguido = consultando_filme()
     rodando_menu = True
     while rodando_menu:
         opcao_seguida = input(f'titulo (Escreva 1)\n'
@@ -209,6 +258,29 @@ def editando_filme():
         else:
             print(f'Espera-se uma opcao_seguida com valor inteiro entre 1 e 6\n')
 
+def add_review(filme_seguido):
+    nota = data[filme_seguido]['Metrics']['IMDB_Rating']
+    n_votos = data[filme_seguido]['Metrics']["No_of_Votes"]
+    titulo = data[filme_seguido]['Series_Title']
+
+    rodando_menu = True
+    while rodando_menu:
+        nova_nota = input(f'Qual nota você deseja adicionar ao filme {titulo}: ')
+
+        try:
+            nova_nota = int(nova_nota)
+            it_is = True
+        except ValueError:
+            it_is = False
+
+        if it_is and 0 <= nova_nota <= 10:
+            rodando_menu = False
+            data[filme_seguido]['Metrics']['IMDB_Rating'] = (nota*n_votos/(n_votos+1) + nova_nota/(n_votos+1))
+            data[filme_seguido]['Metrics']["No_of_Votes"] = n_votos + 1
+
+            return data
+        else:
+            print(f'Espera-se uma opcao_seguida com valor inteiro entre 0 e 10\n')
 
 # Funções relacionadas ao json
 def lendo_filmes_json():  # return data
@@ -242,6 +314,4 @@ def salvando_users_json(data):
 
 if __name__ == '__main__':
     data = lendo_filmes_json()
-    #    editando_filme()
-    create_account()
-    delete_user()
+    menu_login()
