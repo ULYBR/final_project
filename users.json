@@ -1,0 +1,1 @@
+[{"Name": "user1", "ID": 1, "movies_reviewed": [], "admin": "True"}, {"Name": "user2", "ID": 2, "movies_reviewed": [], "admin": "False"}, {"Name": "user3", "ID": 3, "movies_reviewed": [], "admin": "False"}]
