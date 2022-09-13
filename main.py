@@ -79,8 +79,9 @@ def menu_adm():
     rodando_menu = True
     while rodando_menu:
         opcao_seguida = input(f'Buscar um usuário (Escreva 1)\n'
-                              f'deletar um usuário (Escreva 2)\n'
-                              f'Sair (Escreva 3)\n' #Feito
+                              f'Deletar um usuário (Escreva 2)\n'
+                              f'Adicionar um usuário (Escreva 3)\n'
+                              f'Sair (Escreva 4)\n'
                               f'Selecione uma das opções acima digitando apenas o numero: ')
 
         try:
@@ -89,7 +90,7 @@ def menu_adm():
         except ValueError:
             it_is = False
 
-        if it_is and 1 <= opcao_seguida <= 3:
+        if it_is and 1 <= opcao_seguida <= 4:
             rodando_menu = False
             if opcao_seguida == 1:
                 buscar_usuario()
@@ -100,10 +101,14 @@ def menu_adm():
                 return menu_adm()
 
             if opcao_seguida == 3:
+                create_account()
+                return menu_adm()
+
+            if opcao_seguida == 4:
                 return menu_login()
 
         else:
-            print(f'Espera-se uma opcao_seguida com valor inteiro entre 1 e 3\n')
+            print(f'Espera-se uma opcao_seguida com valor inteiro entre 1 e 4\n')
 
 # Classes
 class usuario:
@@ -122,11 +127,11 @@ def login():  # return usuario  #usuario_ativo = login()
     usuario = input(f'Digite seu usuário: ')
     senha = input(f'Digite sua senha: ') #decorativa
     usuarios_cadastrados = lendo_users_json()
-    for lista_de_usuarios in usuarios_cadastrados:
-        if usuario == lista_de_usuarios['Name']:
+    for item_usuario in usuarios_cadastrados:
+        if usuario == item_usuario['Name']:
             print(f'login realizado corretamente')
 
-            return lista_de_usuarios
+            return item_usuario
     print(f'Usuário não cadastrado')
 
 def buscar_usuario():
@@ -169,7 +174,7 @@ def create_account():  # return usuario  #usuario_ativo = login()
         novo_usuario = {"Name": usuario,
                         "ID": (len(usuarios_cadastrados) + 1),
                         "movies_reviewed": [],
-                        "admin": "False"}
+                        "admin": False}
 
         usuarios_cadastrados.append(novo_usuario)
         salvando_users_json(usuarios_cadastrados)
