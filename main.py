@@ -3,7 +3,6 @@ import pandas as pd
 
 usuario_ativo = 'nao'
 
-
 # Funções do menu
 def menu_login():
     rodando_menu = True
@@ -31,7 +30,7 @@ def menu_login():
                     return menu_user()
 
             if opcao_seguida == 2:  # Remover um grupo de trabalho em uma lista (Escreva 4)
-                create_account()
+                adm.create_account()
                 return menu_login()
 
             if opcao_seguida == 3:  # Remover um grupo de trabalho em uma lista (Escreva 4)
@@ -101,11 +100,11 @@ def menu_adm():
                 return menu_adm()
 
             if opcao_seguida == 2:
-                delete_user()
+                adm.delete_user()
                 return menu_adm()
 
             if opcao_seguida == 3:
-                create_account()
+                adm.create_account()
                 return menu_adm()
 
             if opcao_seguida == 4:
@@ -126,6 +125,41 @@ class adm(usuario):
     def print_funcionarios(data_users):
         print(data_users)
 
+    @staticmethod
+    def delete_user():
+        usuarios_cadastrados = lendo_users_json()
+        passou_checagem = True
+        print(f'Os usuários cadastrados são: \n')
+        for lista_de_usuarios in usuarios_cadastrados:
+            print(lista_de_usuarios['Name'])
+        usuario = input(f'Digite o usuário que deseja deletar: ')
+
+        for i in range(len(usuarios_cadastrados)):
+            if usuario == usuarios_cadastrados[i]['Name']:
+                del usuarios_cadastrados[i]
+                salvando_users_json(usuarios_cadastrados)
+                print(f'usuário delatado')
+                break
+
+    @staticmethod
+    def create_account():  # return usuario  #usuario_ativo = login()
+        usuario = input(f'Digite seu usuário: ')
+        usuarios_cadastrados = lendo_users_json()
+        passou_checagem = True
+        for lista_de_usuarios in usuarios_cadastrados:
+            if usuario == lista_de_usuarios['Name']:
+                passou_checagem = False
+
+        if passou_checagem:
+            novo_usuario = {"Name": usuario,
+                            "ID": (len(usuarios_cadastrados) + 1),
+                            "movies_reviewed": [],
+                            "admin": False}
+
+            usuarios_cadastrados.append(novo_usuario)
+            salvando_users_json(usuarios_cadastrados)
+        else:
+            print(f'usuário já cadastrado')
 
 # Funções relacionadas ao login
 def login():  # return usuario  #usuario_ativo = login()
@@ -149,38 +183,7 @@ def buscar_usuario():
 def logout():  # usuario_ativo = 'nao' #vai para o menu_login
     usuario = 'nao'
     return menu_login()
-def delete_user():
-    usuarios_cadastrados = lendo_users_json()
-    passou_checagem = True
-    print(f'Os usuários cadastrados são: \n')
-    for lista_de_usuarios in usuarios_cadastrados:
-        print(lista_de_usuarios['Name'])
-    usuario = input(f'Digite o usuário que deseja deletar: ')
 
-    for i in range(len(usuarios_cadastrados)):
-        if usuario == usuarios_cadastrados[i]['Name']:
-            del usuarios_cadastrados[i]
-            salvando_users_json(usuarios_cadastrados)
-            print(f'usuário delatado')
-            break
-def create_account():  # return usuario  #usuario_ativo = login()
-    usuario = input(f'Digite seu usuário: ')
-    usuarios_cadastrados = lendo_users_json()
-    passou_checagem = True
-    for lista_de_usuarios in usuarios_cadastrados:
-        if usuario == lista_de_usuarios['Name']:
-            passou_checagem = False
-
-    if passou_checagem:
-        novo_usuario = {"Name": usuario,
-                        "ID": (len(usuarios_cadastrados) + 1),
-                        "movies_reviewed": [],
-                        "admin": False}
-
-        usuarios_cadastrados.append(novo_usuario)
-        salvando_users_json(usuarios_cadastrados)
-    else:
-        print(f'usuário já cadastrado')
 
 
 # Funções relacionadas aos filmes
