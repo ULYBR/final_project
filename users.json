@@ -1,1 +1,1 @@
-[{"Name": "user1", "ID": 1, "movies_reviewed": [], "admin": true}, {"Name": "user2", "ID": 2, "movies_reviewed": [], "admin": false}, {"Name": "user3", "ID": 3, "movies_reviewed": [], "admin": false}, {"Name": "user9292", "ID": 4, "movies_reviewed": [], "admin": false}]
+[{"Name": "user1", "ID": 1, "movies_reviewed": [], "admin": true}, {"Name": "user2", "ID": 2, "movies_reviewed": [], "admin": false}, {"Name": "user3", "ID": 3, "movies_reviewed": [], "admin": false}, {"Name": "1", "ID": 4, "movies_reviewed": [], "admin": false}]
