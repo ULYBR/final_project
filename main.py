@@ -30,7 +30,7 @@ def menu_login():
                     return menu_user()
 
             if opcao_seguida == 2:  # Remover um grupo de trabalho em uma lista (Escreva 4)
-                create_account()
+                adm.create_account()
                 return menu_login()
 
             if opcao_seguida == 3:  # Remover um grupo de trabalho em uma lista (Escreva 4)
