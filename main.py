@@ -199,7 +199,7 @@ def consultando_filme():  # return opcao_seguida
         except ValueError:
             it_is = False
 
-        if it_is and 1 <= opcao_seguida <= tamanho:
+        if it_is and 0 <= opcao_seguida <= tamanho:
             rodando_menu = False
             return opcao_seguida
         else:
@@ -289,7 +289,7 @@ def add_review(filme_seguido):
 
 # Funções relacionadas ao json
 def lendo_filmes_json():  # return data
-    f = open('imdb_top_1000.json')  # Opening JSON file
+    f = open('imdb_top_1000.json', encoding= 'utf-8')  # Opening JSON file
     data = json.load(f)  # returns JSON object as a dictionary
     f.close()
     return data
@@ -299,7 +299,7 @@ def salvando_filmes_json(data):
         write_file.close()
     print('Você salvou seu arquivo json')
 def lendo_users_json():
-    f = open('users.json')  # Opening JSON file
+    f = open('users.json', encoding= 'utf-8')  # Opening JSON file
     data_users = json.load(f)  # returns JSON object as a dictionary
     f.close()
     return data_users
