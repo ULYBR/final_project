@@ -1,10 +1,11 @@
 import json
-import pandas as pd
+
 
 usuario_ativo = 'nao'
 
 # Funções do menu
 def menu_login():
+
     rodando_menu = True
     while rodando_menu:
         opcao_seguida = input(f'o----------------------------------------------------------o\n'
@@ -289,7 +290,7 @@ def add_review(filme_seguido):
 
 # Funções relacionadas ao json
 def lendo_filmes_json():  # return data
-    f = open('imdb_top_1000.json')  # Opening JSON file
+    f = open('imdb_top_1000.json',encoding="utf-8")  # Opening JSON file
     data = json.load(f)  # returns JSON object as a dictionary
     f.close()
     return data
@@ -314,6 +315,11 @@ def salvando_users_json(data):
 # TODO dashboard
 
 
+
+
+
 if __name__ == '__main__':
+
     data = lendo_filmes_json()
     menu_login()
+
