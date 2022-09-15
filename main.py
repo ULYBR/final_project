@@ -139,7 +139,7 @@ class adm(usuario):
             if usuario == usuarios_cadastrados[i]['Name']:
                 del usuarios_cadastrados[i]
                 salvando_users_json(usuarios_cadastrados)
-                print(f'usuário delatado')
+                print(f'usuário deletado')
                 break
 
     @staticmethod

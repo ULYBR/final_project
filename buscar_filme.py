@@ -9,8 +9,9 @@ def requisicao(titulo):
         dicionario = json.loads(req.text)
         return dicionario
     except:
-        print('Erro ao conectar com o servidor')
-
+        print('Erro ao conectar com o servidor\n'
+              'Sistema indisponível')
+        exit()
         return None
 
 
@@ -22,14 +23,13 @@ def detalhe_filme(filme):
     print('Nota: ' + filme['imdbRating'])
     print('Premios: ' + filme['Awards'])
     print('Poster: ' + filme['Poster'])
-    print('\ndigite sair para sair da aplicação!')
     print('')
 
 
 
 sair = False
 while not sair:
-    op = input(str('Digite o nome do filme:'))
+    op = input(str('Digite o nome do filme ou sair para sair do sistema: '))
 
     if op == 'sair':
         sair = True
@@ -38,6 +38,6 @@ while not sair:
         filme = requisicao(op)
 
         if filme['Response'] == 'False':
-            print('Filme não encontrado')
+            print('\nFilme não encontrado na base de dados.\n')
         else:
             detalhe_filme(filme)
