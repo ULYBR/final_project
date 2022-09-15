@@ -1,10 +1,7 @@
 # fazer um gerenciador de pesquisar pelo arquivo json
 import json
 import requests
-
 req = None
-
-
 def requisicao(titulo):
     try:
         req = requests.get('http://www.omdbapi.com/?t=' + titulo + '&apikey=139d06c0')
@@ -16,6 +13,16 @@ def requisicao(titulo):
         return None
 
 
+def detalhe_filme(filme):
+    print('Titulo: ' + filme['Title'])
+    print('Ano: ' + filme['Year'])
+    print('Genero: ' + filme['Genre'])
+    print('Diretor: ' + filme['Director'])
+    print('Nota: ' + filme['imdbRating'])
+    print('\ndigite sair para sair da aplicação!')
+    print('')
+
+
 sair = False
 while not sair:
     op = input(str('Digite o nome do filme:'))
@@ -23,14 +30,9 @@ while not sair:
     if op == 'sair':
         sair = True
     else:
-        dicionario = requisicao(op)
-        if dicionario['Response'] == 'True':
-            print('Titulo: ' + dicionario['Title'])
-            print('Ano: ' + dicionario['Year'])
-            print('Genero: ' + dicionario['Genre'])
-            print('Diretor: ' + dicionario['Director'])
-            print('Nota: ' + dicionario['imdbRating'])
-            print('\ndigite sair para sair da aplicação!')
+        filme = requisicao(op)
 
-        else:
+        if filme['Response'] == False:
             print('Filme não encontrado')
+        else:
+            detalhe_filme(filme)
