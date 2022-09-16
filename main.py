@@ -139,7 +139,7 @@ class adm(usuario):
             if usuario == usuarios_cadastrados[i]['Name']:
                 del usuarios_cadastrados[i]
                 salvando_users_json(usuarios_cadastrados)
-                print(f'usuário delatado')
+                print(f'usuário deletado')
                 break
 
     @staticmethod
@@ -315,6 +315,11 @@ def salvando_users_json(data):
 # TODO dashboard
 
 
+
+
+
 if __name__ == '__main__':
+
     data = lendo_filmes_json()
     menu_login()
+

@@ -1,0 +1,42 @@
+[
+   {
+      "Name":"user1",
+      "ID":1,
+      "movies_reviewed":[
+
+      ],
+      "admin":true
+   },
+   {
+      "Name":"admin",
+      "ID":2,
+      "movies_reviewed":[
+
+      ],
+      "admin":true
+   },
+   {
+      "Name":"cesar",
+      "ID":3,
+      "movies_reviewed":[
+
+      ],
+      "admin":false
+   },
+   {
+      "Name":"ulysses",
+      "ID":4,
+      "movies_reviewed":[
+
+      ],
+      "admin":false
+   },
+   {
+      "Name":"raphael",
+      "ID":5,
+      "movies_reviewed":[
+
+      ],
+      "admin":false
+   }
+]
