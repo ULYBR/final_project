@@ -1,10 +1,3 @@
-# final_project 
-
-
-### Sistema de review de filmes
+# final_project
 
 ## README FINAL PROJECT
-
-### CÉSAR AUGUSTO
-### ULYSSES LEAL
-### RAPHAEL BORGES
