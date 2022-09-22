@@ -1,7 +1,4 @@
-# final_project 
-
-
-### Sistema de review de filmes
+# Sistema de review de filmes
 
 ## README FINAL PROJECT
 
