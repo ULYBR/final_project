@@ -1,5 +1,6 @@
 import json
 
+# Projeto de gerenciamneto de reviews de filmes.
 
 usuario_ativo = 'nao'
 
